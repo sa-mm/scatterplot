@@ -38,6 +38,7 @@ function chartIt(dataset) {
     .append('svg')
     .attr('preserveAspectRation', 'xMinYMin meet')
     .attr('viewBox', '0 0 ' + w + ' ' + h)
+    .classed('svg-content', true)
 
   const doping = (d, i) => {
     if (d['Doping'].length > 0) {
@@ -105,7 +106,7 @@ function chartIt(dataset) {
     .attr('x', 0 - (h / 2))
     .attr('dy', '1em')
     .style('text-anchor', 'middle')
-    .text('Minutes')
+    .text('Best Time (minutes)')
     .attr('id', 'y-axis-label')
 
   var legend = svg.append('g')
