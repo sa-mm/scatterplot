@@ -1,22 +1,13 @@
-document.addEventListener('DOMContentLoaded', contentLoadedCb)
+// @ts-check
+const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json'
+d3.json(url, chartIt)
 
-function contentLoadedCb(req) {
-  const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json'
-  req = new XMLHttpRequest()
-  req.open('GET', url, true)
-  req.send()
-  req.onload = function () {
-    json = JSON.parse(req.responseText)
-    // console.log(json)
-    chartIt(json)
-  }
-}
-
-function chartIt(dataset) {
+function chartIt(error, dataset) {
+  if (error) throw error
   var w = 800
   var h = 400
   var padding = 60
-  var barWidth = 1
+  // var barWidth = 1
 
   const shiftYear = (date, nYears) => {
     const newYear = date.getFullYear() + nYears
@@ -68,7 +59,7 @@ function chartIt(dataset) {
     .attr('cx', (d, i) => xScale(dates[i]))
     .attr('cy', (d, i) => yScale(minutes[i]))
     .attr('data-xvalue', (d, i) => xScale(dates[i]))
-    // .attr('data-xvalue', (d, i) => d['Year'])
+    // .attr('data-xvalue', (d, i) => d.Year)
     .attr('data-yvalue', (d, i) => yScale(minutes[i]))
     // .attr('data-yvalue', d => d['Time'])
     .on('mouseover', onMouseOverCB)
@@ -114,7 +105,8 @@ function chartIt(dataset) {
 
   var legendPadding = padding
 
-  var noDopingLegend = legend.append('rect')
+  // no doping legend
+  legend.append('rect')
     .attr('x', w - legendPadding)
     .attr('y', h / 2)
     .attr('width', 18)
@@ -129,7 +121,8 @@ function chartIt(dataset) {
     .style('font-size', 'small')
     .text('No doping allegations')
 
-  var dopingLegend = legend.append('rect')
+  // doping legend
+  legend.append('rect')
     .attr('x', w - legendPadding)
     .attr('y', (h / 2) + 20)
     .attr('width', 18)
