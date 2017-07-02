@@ -2,12 +2,11 @@
 const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json'
 d3.json(url, chartIt)
 
-function chartIt(error, dataset) {
+function chartIt (error, dataset) {
   if (error) throw error
   var w = 800
   var h = 400
   var padding = 60
-  // var barWidth = 1
 
   const shiftYear = (date, nYears) => {
     const newYear = date.getFullYear() + nYears
@@ -58,10 +57,8 @@ function chartIt(error, dataset) {
     .attr('r', 6)
     .attr('cx', (d, i) => xScale(dates[i]))
     .attr('cy', (d, i) => yScale(minutes[i]))
-    .attr('data-xvalue', (d, i) => xScale(dates[i]))
-    // .attr('data-xvalue', (d, i) => d.Year)
-    .attr('data-yvalue', (d, i) => yScale(minutes[i]))
-    // .attr('data-yvalue', d => d['Time'])
+    .attr('data-xvalue', (d, i) => d.Year)
+    .attr('data-yvalue', (d, i) => minutes[i])
     .on('mouseover', onMouseOverCB)
     .on('mousemove', function () { return tooltip.style('top', (d3.event.pageY - 10) + 'px').style('left', (d3.event.pageX + 10) + 'px') })
     .on('mouseout', function () { return tooltip.style('visibility', 'hidden') })
